@@ -14,7 +14,7 @@ import optparse
 def get_option():
     parser = optparse.OptionParser()
 
-    parser.add_option("-t","--target", dest="target",default="10.0.2.1/24", help="Target IP / IP Range")
+    parser.add_option("-t","--target", dest="target",default="192.168.0.1/24", help="Target IP / IP Range")
     (options , arguments) = parser.parse_args()
     return options
 
